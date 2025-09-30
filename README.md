@@ -30,7 +30,7 @@ Task Manager Pro is designed for speed, simplicity, and powerful organization.
 
 ## Screenshots
 
-| ![List View](Screenshots/IN PAGER.png) |
+| (screenshots/IN%20PAGER.png). |
 
 ### Task Views
 | List View | Kanban Board | Calendar View |
@@ -40,7 +40,7 @@ Task Manager Pro is designed for speed, simplicity, and powerful organization.
 ### Advanced Views
 | Timeline View | AI Assistant | Login Page |
 | :---: | :---: | :---: |
-| ![Timeline View](screenshots/IN%20PAGER.png)<br>*Chronological progression* | ![AI Assistant](screenshots/ai-assistant.png)<br>*Quick actions and insights* | ![Login Page](screenshots/login-page.png)<br>*Secure access point* |
+| ![Timeline View](screenshots/IN20PAGER.png)<br>*Chronological progression* | ![AI Assistant](screenshots/ai-assistant.png)<br>*Quick actions and insights* | ![Login Page](screenshots/login-page.png)<br>*Secure access point* |
 
 ---
 
