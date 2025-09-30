@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager Pro</title>
+    <link rel="stylesheet" href="task-manager.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Task Manager Pro</h1>
+                <div class="user-info" id="user-info"></div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-tasks">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completed-tasks">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="pending-tasks">0</span>
+                    <span class="stat-label">Pending</span>
+                </div>
+                <button id="logout-btn" class="logout-btn" title="Logout">Logout</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Categories</h3>
+                    <div class="category-list">
+                        <button class="category-btn active" data-category="all">
+                            <span>All Tasks</span>
+                            <span class="category-count" id="count-all">0</span>
+                        </button>
+                        <button class="category-btn" data-category="work">
+                            <span>Work</span>
+                            <span class="category-count" id="count-work">0</span>
+                        </button>
+                        <button class="category-btn" data-category="personal">
+                            <span>Personal</span>
+                            <span class="category-count" id="count-personal">0</span>
+                        </button>
+                        <button class="category-btn" data-category="shopping">
+                            <span>Shopping</span>
+                            <span class="category-count" id="count-shopping">0</span>
+                        </button>
+                        <button class="category-btn" data-category="health">
+                            <span>Health</span>
+                            <span class="category-count" id="count-health">0</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Filter by Label</h3>
+                    <div class="label-filters">
+                        <button class="label-filter-btn" data-label="urgent">
+                            <span class="label-dot" style="background: #ef4444;"></span>
+                            Urgent
+                        </button>
+                        <button class="label-filter-btn" data-label="important">
+                            <span class="label-dot" style="background: #f59e0b;"></span>
+                            Important
+                        </button>
+                        <button class="label-filter-btn" data-label="low-priority">
+                            <span class="label-dot" style="background: #10b981;"></span>
+                            Low Priority
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Task Area -->
+            <main class="task-area">
+                <!-- Add Task Form -->
+                <div class="add-task-card">
+                    <h2>Add New Task</h2>
+                    <form id="task-form">
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="task-title">Task Title</label>
+                                <input type="text" id="task-title" placeholder="Enter task title..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-category">Category</label>
+                                <select id="task-category" required>
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="health">Health</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-due-date">Due Date</label>
+                                <input type="date" id="task-due-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-status">Status</label>
+                                <select id="task-status" required>
+                                    <option value="todo">To Do</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-label">Priority Label</label>
+                                <select id="task-label" required>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="important">Important</option>
+                                    <option value="low-priority">Low Priority</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-tags">Tags (comma-separated)</label>
+                                <input type="text" id="task-tags" placeholder="design, frontend, bug-fix">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="task-description">Description (Optional)</label>
+                            <textarea id="task-description" rows="3" placeholder="Add task details..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            Add Task
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tasks Display -->
+                <div class="tasks-section">
+                    <div class="tasks-header">
+                        <h2 id="section-title">All Tasks</h2>
+                        <div class="tasks-controls">
+                            <div class="view-switcher">
+                                <button class="view-btn active" data-view="list" title="List View">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <rect x="2" y="3" width="12" height="2" rx="1"/>
+                                        <rect x="2" y="7" width="12" height="2" rx="1"/>
+                                        <rect x="2" y="11" width="12" height="2" rx="1"/>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="kanban" title="Kanban Board">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <rect x="2" y="2" width="4" height="12" rx="1"/>
+                                        <rect x="7" y="2" width="4" height="8" rx="1"/>
+                                        <rect x="12" y="2" width="2" height="10" rx="1"/>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="calendar" title="Calendar View">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <rect x="2" y="3" width="12" height="11" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                        <line x1="2" y1="6" x2="14" y2="6" stroke="currentColor" stroke-width="1.5"/>
+                                        <line x1="5" y1="1" x2="5" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                                        <line x1="11" y1="1" x2="11" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="timeline" title="Timeline View">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <rect x="2" y="3" width="6" height="2" rx="1"/>
+                                        <rect x="4" y="7" width="8" height="2" rx="1"/>
+                                        <rect x="3" y="11" width="5" height="2" rx="1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <select id="sort-select">
+                                <option value="date-asc">Due Date (Earliest)</option>
+                                <option value="date-desc">Due Date (Latest)</option>
+                                <option value="priority">Priority</option>
+                                <option value="created">Recently Added</option>
+                            </select>
+                            <button id="clear-completed" class="btn-secondary">Clear Completed</button>
+                        </div>
+                    </div>
+
+                    <!-- List View -->
+                    <div id="list-view" class="view-content active">
+                        <div id="tasks-container" class="tasks-container">
+                            <!-- Tasks will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Kanban View -->
+                    <div id="kanban-view" class="view-content">
+                        <div class="kanban-board">
+                            <div class="kanban-column" data-status="todo">
+                                <div class="kanban-header">
+                                    <h3>To Do</h3>
+                                    <span class="kanban-count" id="kanban-count-todo">0</span>
+                                </div>
+                                <div class="kanban-tasks" id="kanban-todo"></div>
+                            </div>
+                            <div class="kanban-column" data-status="in-progress">
+                                <div class="kanban-header">
+                                    <h3>In Progress</h3>
+                                    <span class="kanban-count" id="kanban-count-in-progress">0</span>
+                                </div>
+                                <div class="kanban-tasks" id="kanban-in-progress"></div>
+                            </div>
+                            <div class="kanban-column" data-status="completed">
+                                <div class="kanban-header">
+                                    <h3>Completed</h3>
+                                    <span class="kanban-count" id="kanban-count-completed">0</span>
+                                </div>
+                                <div class="kanban-tasks" id="kanban-completed"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar View -->
+                    <div id="calendar-view" class="view-content">
+                        <div class="calendar-header">
+                            <button id="prev-month" class="calendar-nav-btn">&lt;</button>
+                            <h3 id="calendar-month-year"></h3>
+                            <button id="next-month" class="calendar-nav-btn">&gt;</button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid"></div>
+                    </div>
+
+                    <!-- Timeline View -->
+                    <div id="timeline-view" class="view-content">
+                        <div class="timeline-container" id="timeline-container"></div>
+                    </div>
+
+                    <div id="empty-state" class="empty-state">
+                        <h3>No tasks yet</h3>
+                        <p>Add your first task to get started!</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Task Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Task</h2>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="form-group">
+                    <label for="edit-task-title">Task Title</label>
+                    <input type="text" id="edit-task-title" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-task-category">Category</label>
+                        <select id="edit-task-category" required>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="health">Health</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-task-status">Status</label>
+                        <select id="edit-task-status" required>
+                            <option value="todo">To Do</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-task-label">Priority Label</label>
+                        <select id="edit-task-label" required>
+                            <option value="urgent">Urgent</option>
+                            <option value="important">Important</option>
+                            <option value="low-priority">Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-task-tags">Tags</label>
+                        <input type="text" id="edit-task-tags" placeholder="design, frontend, bug-fix">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-due-date">Due Date</label>
+                    <input type="date" id="edit-task-due-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-description">Description</label>
+                    <textarea id="edit-task-description" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-edit">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AI Assistant Panel -->
+    <div id="ai-assistant" class="ai-assistant">
+        <button id="ai-toggle" class="ai-toggle" title="AI Assistant">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+            </svg>
+        </button>
+        <div id="ai-panel" class="ai-panel">
+            <div class="ai-header">
+                <h3>AI Assistant</h3>
+                <button id="ai-close" class="ai-close-btn">&times;</button>
+            </div>
+            <div class="ai-suggestions">
+                <h4>Quick Actions</h4>
+                <button class="ai-action-btn" data-action="suggest-tasks">Suggest tasks based on category</button>
+                <button class="ai-action-btn" data-action="prioritize">Auto-prioritize overdue tasks</button>
+                <button class="ai-action-btn" data-action="summarize">Summarize completed tasks</button>
+                <button class="ai-action-btn" data-action="organize">Organize by workload</button>
+            </div>
+            <div class="ai-chat">
+                <h4>Ask AI</h4>
+                <div id="ai-messages" class="ai-messages"></div>
+                <div class="ai-input-container">
+                    <input type="text" id="ai-input" placeholder="Ask about your tasks..." />
+                    <button id="ai-send" class="ai-send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="task-manager-enhanced.js"></script>
+</body>
+</html>
