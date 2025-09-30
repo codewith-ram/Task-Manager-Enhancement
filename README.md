@@ -30,6 +30,8 @@ Task Manager Pro is designed for speed, simplicity, and powerful organization.
 
 ## Screenshots
 
+| ![List View](Screenshots/IN PAGER.png) |
+
 ### Task Views
 | List View | Kanban Board | Calendar View |
 | :---: | :---: | :---: |
